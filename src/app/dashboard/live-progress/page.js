@@ -57,7 +57,7 @@ export default function LiveProgressPage() {
   useEffect(() => {
     const fetchDonations = async () => {
       try {
-        const response = await fetch("https://www.docswithinborders.org/api/donations");
+        const response = await fetch("/api/proxy-donations");
         if (!response.ok) throw new Error("Failed to fetch donation data");
 
         const data = await response.json();
@@ -84,16 +84,13 @@ export default function LiveProgressPage() {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(
-        "https://www.docswithinborders.org/api/donations",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(donations),
-        }
-      );
+      const response = await fetch("/api/proxy-donations", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donations),
+      });
 
       if (!response.ok) throw new Error("Failed to update donation data");
       alert("Donation data updated successfully!");
